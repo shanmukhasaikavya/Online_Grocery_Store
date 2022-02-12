@@ -1,0 +1,55 @@
+/*/-----------creating database------------*/
+create database ogsjsp;
+
+
+
+/*----------creating tables---------------*/
+use ogsjsp;
+/*------users table------*/
+create table users(name varchar(100),email varchar(100)primary key,mobileNumber bigint, securityQuestion varchar(200),answer varchar(200),password varchar(100),address varchar(500),city varchar(100),state varchar(100),country varchar(100));
+
+/*------product table-----*/
+create table product(id int NOT NULL auto_increment,name varchar(500),image varchar(500),category varchar(200),price int,active varchar(10),primary key(id));
+
+/*------cart table--------*/
+create table cart(email varchar(100),product_id int,quantity int,price int,total int,address varchar(500),city varchar(100),state varchar(100),country varchar(100),mobileNumber bigint,orderDate varchar(100),deliveryDate varchar(100),paymentMethod varchar(100),transactionId varchar(100),status varchar(10));
+
+/*------message table-----*/
+create table message(id int AUTO_INCREMENT,email varchar(100),subject varchar(200),body varchar(1000),PRIMARY KEY(ID));
+
+
+/*---------insert into product table----------------*/
+
+
+
+/*---vegetables-----*/
+INSERT INTO product(name,image,category,price,active) VALUES("Onion-1kg","http://pngimg.com/uploads/onion/onion_PNG3831.png","vegetables",20,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Tomato-1kg","https://www.freepnglogos.com/uploads/tomato-png/tomato-and-kidney-stone-everyday-life-23.png","vegetables",10,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Potato-1kg","http://alrafique.com/images/potatoes.png","vegetables",15,"Yes");
+
+/*-----fruits-------*/
+INSERT INTO product(name,image,category,price,active) VALUES("Apple-6","http://pngimagesfree.com/Fruit/Apple-png/Apples_PNG_Transparent-image.png","fruits",100,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Banana-6","https://www.pngpix.com/wp-content/uploads/2016/03/Yellow-Bananas-PNG-image.png","fruits",40,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Mangoes-6","https://i.pinimg.com/originals/16/dd/63/16dd63984b3dfea3f57781cafa0c8d17.png","fruits",15,"Yes");
+
+/*-----Dairy and Bakery-----*/
+INSERT INTO product(name,image,category,price,active) VALUES("Amul Butter - 500g","https://fruituncle.in/product-images/2019/07/19/115/large/amul-butter-500-gm-pc-1.png","dairy",223,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Bauli Moonfils rolls-47g","https://www.bauli.in/moonfils-strawberry-veg_1.png","dairy",15,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Amul Cow Ghee-1L Tin","https://www.cpdubai.com/wp-content/uploads/2018/09/Amul-Cow-Ghee-1ltr.png","dairy",540,"Yes");
+
+/*------Snacks and Branded Foods---------*/
+INSERT INTO product(name,image,category,price,active) VALUES("Britannia Biscuits 100g","https://www.wewinbazaar.com/assets/snacks_biscuits/britannia-good-day-butter-cookies-biscuit800x80020601551166444.png","snacks",20,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Maggi noodles - 70g","https://clipground.com/images/maggi-png-10.png","snacks",15,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Kelloggs's Chocos 1.2kg","https://tse3.mm.bing.net/th?id=OIP.YSxryP95CE63LrHiOAZv0gAAAA&pid=Api&P=0&w=300&h=300","snacks",380,"Yes");
+
+/*--------Beverages---------------*/
+INSERT INTO product(name,image,category,price,active) VALUES("Red Label Leaf Tea - 450g","https://cdn.shopify.com/s/files/1/2796/8772/products/21016919_front_a04_580x.png?v=1573496384","beverages",260,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Maaza Mango - 600ml","https://qph.fs.quoracdn.net/main-qimg-0f4ff9f3922187b87ba97457270f42e6","beverages",30,"Yes");
+
+/*--------Home Care---------------*/
+INSERT INTO product(name,image,category,price,active) VALUES("comfort fresh fabric conditioner - 220ml","https://jeyamsupermarket.com/images/thumbs/0002745_comfort-after-wash-lily-fresh-fabric-conditioner-220-ml.png","homeCare",50,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Detol liquid 500ml","http://www.statewide1.com.au/images/dettol%20500.png","homeCare",50,"Yes");
+
+/*--------Baby Care---------------*/
+INSERT INTO product(name,image,category,price,active) VALUES("Himalaya Baby Powder - 200g","http://www.merohealthcare.com/assets/images/1600341537Himalayan%20Baby%20Powder.png","babyCare",130,"Yes");
+INSERT INTO product(name,image,category,price,active) VALUES("Pampers baby-24 pack","http://centra.ie/image/var/files/products/PA513/pampers_baby_dry_24pack.png","babyCare",500,"Yes");
