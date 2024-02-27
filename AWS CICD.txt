@@ -1,0 +1,171 @@
+spring boot project 
+	-source code
+      -test case
+      -application.properties
+      -Dockerfile    ---> used to create docker image
+      -buildspec.yaml ---> instruction
+      -pom.xml
+
+Docker image created using code build
+
+CI/CD
+-----
+agile 
+------
+whatsapp ---> message ----------------->deploy the project(6 months) ------------> 10 lakhs
+			tick
+			double tick
+	   --->voice call ------------>deploy the project
+         ---> video call
+         ---> status
+
+messge        
+voice call
+video call
+status                 ------------> deploy the project (3 years with out bug)
+
+------------------
+
+
+message ---> 5 developers 1 Team Leader (6 months)
+development stage
+----------------
+developer 1 day1 day2 (version control -git or code commit(AWS)
+developer 2
+developer 3
+developer 4
+developer 5
+
+Step 1: After develop the project ---> push into code commit
+
+Step 2: Build project (Code Build)  --> after build you will docker image
+
+Step 3: docker image stored in the ECR 
+
+Step 4: run the image ECS 
+
+
+Deploy Microservice project in AWS via CICD pipeline
+--------------------------------------------------------
+
+Step 1: Code Commit
+		Create repository
+				rest-repo
+	  Copy Clone URL : git clone https://git-codecommit.ap-south-1.amazonaws.com/v1/repos/rest-repo
+
+		
+
+Step 2: IAM
+		Users-->find IAM User (30admaws0130) -->Security Credentials -->HTTPS Git credentials for AWS CodeCommit
+														-->Generate Credentials
+																-->download excel sheet
+
+			
+Step 3:Clone git repository
+	  repository created locally(C:\Users\sheri\git\rest-repo)
+
+Step 4:Push the code in Code Commit
+       first code will move on to local repository and then push into global respository(code commit)
+Step 5: ECR (Amazon Elastic Container Registry)  vs Dockerhub
+		Create registry or repository
+		----------------------------
+		create private -->rest-registry
+		URI : 555918697305.dkr.ecr.ap-south-1.amazonaws.com/rest-registry
+
+		do changes in the build spec file
+Step 6 :	Create VPC --> Enable DNS Name
+		2 subnet in AZ1 and AZ2
+		create association between the subnet via routing table
+		Internet gateway -->attached to VPC
+		Security group
+
+Step 7:	EC2
+		
+		Create Load balancer -->Create Target Group
+
+		lb name :rest-demo-lb
+		DNS Name :rest-demo-lb-2139557270.ap-south-1.elb.amazonaws.com
+
+Step 8:   ECS (Amazon Elastic Container Service)
+		Step 1: Create Cluster : rest-demo-cluster
+		Step 2: Create Task Definition
+				task definition name: rest-demo-taskdef
+				container name :rest-demo-container
+		Step 3: Create Service
+				service name :rest-demo-service
+
+
+		Cluster
+			service
+				task definition is running (2 task is running)
+Step 9: Code pipeline
+		Code Commit
+		Code Build
+			Create build project --> ECR
+		Code Deploy  --> ECS
+
+Code Pipeline name :rest-demo
+Role name :AWSCodePipelineServiceRole-ap-south-1-rest-demo
+Code Build
+Rolename: codebuild-rest-demo-project-service-role ---> Go to IAM -->Role-->find rolename and then Apply policy AmazonEC2ContainerRegistryFullAccess
+
+Note : attach policy before creating pipeline
+
+
+
+VPC --------->my-vpc-12-05  sg-12-05 (8083)
+    ---------> all microservice application use 8083
+
+authentication-service ----> push in the code commit 
+				 ---> do all the steps
+				---->DNS 
+                --->DNS/authenticate
+
+coupon-service (DNS authenication-service)--->
+
+product-service (auth,coupon)
+
+spring-mvc ---> dns/api
+
+
+spring-mvc--->running in localhost
+
+all microservices deployed in aws Fargate (server less)
+
+remove naming-server from aws workspace
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

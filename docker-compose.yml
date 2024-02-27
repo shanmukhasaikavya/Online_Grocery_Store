@@ -1,0 +1,86 @@
+version: "3.8"
+services:
+  naming-server:
+    image: sherinein/naming-server:0.0.1-SNAPSHOT
+    container_name: naming-server
+    build:
+      context: ./naming-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - ecommerce-network
+  gateway-service:
+    image: sherinein/gateway-service:0.0.1-SNAPSHOT
+    container_name: gateway-service
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    environment:
+      - EUREKA.CLIENT.SERVICEURL.DEFAULTZONE=http://naming-server:8761/eureka/ 
+    ports:
+      - "8765:8765"
+    networks:
+      - ecommerce-network
+    depends_on:
+      - naming-server
+    links:
+      - naming-server
+  product-service:
+    image: sherinein/product-service:0.0.1-SNAPSHOT
+    container_name: product-service
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA.CLIENT.SERVICEURL.DEFAULTZONE=http://naming-server:8761/eureka/ 
+    ports:
+      - "8091:8091"
+    networks:
+      - ecommerce-network
+    deploy:
+        restart_policy:
+                condition: on-failure
+    depends_on:
+      - naming-server
+      - mysql-service
+    links:
+      - naming-server
+      - mysql-service
+  coupon-service:
+      image: sherinein/coupon-service:0.0.1-SNAPSHOT
+      container_name: coupon-service
+      build:
+        context: ./coupon-service
+        dockerfile: Dockerfile
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+        - EUREKA.CLIENT.SERVICEURL.DEFAULTZONE=http://naming-server:8761/eureka/ 
+      ports:
+        - "8083:8083"
+      networks:
+        - ecommerce-network
+      deploy:
+          restart_policy:
+                  condition: on-failure
+      depends_on:
+        - naming-server
+        - mysql-service
+      links:
+        - naming-server
+        - mysql-service
+  mysql-service:
+      image: mysql:8.0.26
+      container_name: ecommerce-mysql-container
+      ports:
+        - "33000:3306"
+      networks:
+        - ecommerce-network
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=microservicedb
+networks:
+  ecommerce-network: 
+      driver: bridge
+       

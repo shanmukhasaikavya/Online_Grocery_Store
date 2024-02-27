@@ -1,0 +1,123 @@
+Swagger
+
+Spring Security ( Spring MVC | Spring REST)
++
+JWT - JSON Web Token ( Microservice)
+
+Spring MVC ----->
+
+Spring REST ---->
+
+client application  (POST MAN)----> Spring Rest
+Angular | React | vue ....
+Spring MVC
+.Net
+python
+xyz ............
+
+(POST MAN) ---> Spring Rest
+           ----> create documentation using Swagger
+				POJO
+				API ----> Resource
+		---> Swagger --->rest documentation tool
+Step 1:
+ pom.xml
+----------
+
+<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+Step 2:
+SwaggerConfiguration
+ 1. Docket Object
+
+
+100 --->Resource
+15 Resource ----> 
+
+Step 3 :
+document your API and Model class
+
+@Api -- class level annotation
+@ApiOperation --method level annotation
+
+
+{
+    "id": "Spring",
+    "name": "SpringFramework",
+    "description": "Springdescription"
+  }
+
+URL ---> http://localhost:8090/swagger-ui.html
+
+
+Spring Rest | Microservice + spring data JPA + swagger + MySQL | H2 database + Spring Security
+
+
+Spring Security
+---------------
+
+
+signin page and logout page created by spring security
+
+by default username is user
+	     pasword is  generated at runtime
+
+1. Authentication
+	check whether  the user is authorized user or not
+
+2. Autherization
+
+    Based on role
+  check whether the authorized user can access the resource or not
+
+
+How to implement spring security
+Step 1:
+pom.xml
+
+pom.xml
+-------
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+    			<groupId>org.springframework.security</groupId>
+      		<artifactId>spring-security-test</artifactId>
+     			<scope>test</scope>
+    		</dependency>
+Step 2:
+@EnableWebSecurity
+class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{
+
+1.Authentication
+void configure(AuthenicationManagerBuilder auth){
+
+types of authentication
+-----------------------
+inMemoryAuthentication()
+}
+2.Autherization
+ void configure(HttpSecurity http){
+	}
+
+http://localhost:8090/ -----------> anyone can access --->everyone ---->.permitAll()
+                     /login---------> ,,
+                     /products --------> USER OR ADMIN ---> one or more roles (.hasAnyRole("USER","ADMIN"))
+                    /proudcts/1 ----> ADMIN         ----> only one ROLE (.hasRole("ADMIN")  )
+ 
+
+UserDetailService and JWT
+-----------------------------

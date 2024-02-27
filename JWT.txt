@@ -1,0 +1,119 @@
+Spring Security
+---------------
+JWT --> JSON Web Token
+
+Spring MVC 
+----------
+validate username and password ---> valid--->session
+
+
+Spring REST and Microservice Project
+-------------------------------------
+
+Third party client application(Red bus app) also call your service
+Angular or React JS (client app- Volvo app) ................> 
+
+								server-side application
+	clientapp						VolvoResource
+									/authenticate ----> valid user
+	-------------------------     >			/getAllBus
+									/getBusByRoute
+									/getBusDate
+									/addBus
+									/deleteBusByCode
+									/updateBus
+
+There is no session management b/w two different application
+
+
+5 microservice
+--------------
+			coupon-service
+Reactapp--->	product-service
+			authentication-service
+
+
+JWT ---> check whether same user is accessing all other service or not
+
+username : admin
+password : admin
+
+Token eyJhbGciOiJIUzUxMiJ9   ----------> Header
+     .eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY1MTc0MjU2MCwiaWF0IjoxNjUxNzI0NTYwfQ ----> Payload
+   .lupngowiTcME6yxbqiDG44G6jZaC6ST75ejXLOWpjVo5QNEFIAOhfobET6OXjiHeKovWLxmWMo9DsT-LRLB_OQ ---> Signature
+
+Token is divided into 3 part
+1. HEADER:ALGORITHM & TOKEN TYPE
+	{
+ 		"alg": "HS512"
+	}
+2. PAYLOAD:DATA
+	{
+
+ 	 "sub": "admin",
+  	 "exp": 1651742560,
+  	 "iat": 1651724560
+	}
+3. VERIFY SIGNATURE
+	HMACSHA512(
+ 	 base64UrlEncode(header) + "." +
+ 	 base64UrlEncode(payload),
+  
+	your-256-bit-secret
+
+	)
+
+
+
+UserRepository
+JWTUserDetailsService ----
+
+JWTTokenUtil
+------------
+1. generateToken
+	call doGenerateToken
+2. isTokenExpired
+     call getExpirationDateFromToken
+3. getExpirationDateFromToken
+     call getClaimFromToken
+		call getAllClaimsFromToken
+4. validateToken
+	call getUsernameFromToken
+
+
+JWtRequestFilter
+----------------
+---------------->Filter --->controller
+
+doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+
+using request object handle the request
+portal-app (client app)
+naming-server
+gateway-service (optional)
+microservice1 (h2(deployment) | Mysql , Swagger)
+microservice2
+microservice3
+microservice4
+authentication-service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

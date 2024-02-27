@@ -1,0 +1,199 @@
+truyum-microservice
+	menuitem-service ----> one database ---> table
+		getAllMenuitem()
+           updateMenuItem()
+		deleteMenuItem()
+	cart-service -----> one database --->table
+		addCart()
+		enable feignclient ---->
+      naming-server
+	gateway-service
+	authentication-service(Spring security)
+	React-app (client-application)
+
+
+Microservice
+------------
+1. load balancing
+2. spring cloud gateway
+	zuul gate way ( no longer support by the spring boot application)
+	spring boot version + spring cloud version 
+ 
+
+
+Docker
+------
+
+1.create docker image for spring rest application---> push this image in docker hub
+2.create docker image for spring rest application + mysql
+
+3. create docker image for Microservice
+
+Service(product) to service(coupon) communication
+----------------------------------
+Load Balancing  ---> Feign client will do loadbalancing also
+--------------
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
+
+
+development environment  ---> configuration (database --->)
+testing environment --->
+production environment ---> 
+
+Spring Cloud Gateway instead of Zuul gate way
+----------------------------------------------
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+
+routing and logger
+
+Restwebservice or spring-mvc using spring boot (application.properties or Java Based configuration) or  spring-mvc using Maven (xml or java based configuration)
+Microservice
+-------------
+Docker
+------
+Virtual Machine
+---------------
+2000 ---> virtual machine 
+		----> windows 98 ---> 256 MB
+				virutal Machine ---> Linux (OS)--->run the application
+		---> linux 
+
+		Windows ---> used to develop the project (Development stage)
+		Linux --->used to deploy the project (Production stage)
+	
+	----> Docker	
+
+Spring boot application ---> convert into the jar file ---> run this jar --->then your application will start
+
+install jre ----> run jar 
+
+instead of that we use docker image ( contains jar file,java,dependency)
+
+run the docker image ---> container
+
+
+dockerhub ---> docker registry ---> lot of images (public or private)
+
+
+pull the image from the dockerhub
+----------------------------------
+docker pull docker-image-name
+
+
+How to create docker image?
+
+
+Docker file contains ----> layer of images 
+
+Step 1: create docker image
+docker image build -t rest-docker .
+Step 2: Add repository/user name before image
+docker tag rest-docker sherinein/rest-docker
+Step 3: Push docker image in the dockerhub
+docker push sherinein/rest-docker
+Step 4: delete local docker image 
+docker rmi -f docker-image-id
+Step 5: pull image from the dockerhub
+docker pull sherinein/rest-docker (dockerimage name)
+Step 6: Run the docker image
+docker run -p 8090:8090 sherinein/rest-docker
+
+
+Create docker image for Spring REST and MYSQL
+----------------------------------------------
+
+Input (UserRequest)---> 4 i/p
+		name,email,mobileNumber,qualification
+entity (User)---> 4 (i/p) + 3 (created by hibernate)
+name,email,mobileNumber,qualification + id,createdAt,updatedAt
+output (UserResponse)--->3 (output)
+		email,mobileNumber,qualification
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.3.8</version>
+		</dependency>
+
+
+
+Step 1: Pull mysql image from dockerhub
+docker pull mysql:8.0.28
+
+Step 2: create network
+docker network create user-mysql2-network
+
+Step 3: list out all the docker network
+docker network ls
+
+Step 4: Run mysql container in this network(user-mysql2-network )
+docker container run --name mysqlusercontainer --network user-mysql2-network -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=bootdb -d mysql:8.0.28
+					mysql container name         networkname											  mysql image name
+
+Step 5: Check container is running or not
+docker container ls
+
+Step 6: 
+docker container logs -f mysqlusercontainer
+Step 7:
+docker container exec -it mysqlusercontainer bash
+ mysql -uroot -p
+Enter password:root
+
+Step 8:Display mysql database
+show databases;
+bootdb
+
+
+Step 9:
+docker image build -t rest-demo .
+Step 10:Spring boot application running in the same network
+docker container run --network user-mysql2-network --name rest-demo2-container -p 8091:8091 -d rest-demo
+
+Step 11
+
+D:\stage4-workspace\rest-demo>docker container ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                              NAMES
+6d9f67fbd250   rest-demo      "java -jar /rest-dem…"   13 seconds ago   Up 10 seconds   8090/tcp, 0.0.0.0:8091->8091/tcp   rest-demo2-container
+9bc046f59a79   mysql:8.0.26   "docker-entrypoint.s…"   11 minutes ago   Up 11 minutes   3306/tcp, 33060/tcp                mysqlusercontainer
+
+
+
+
+
+
+
+
+
+
+
+			
+	
+
+
+
+
+
+
+
+
+
+
+
+
+

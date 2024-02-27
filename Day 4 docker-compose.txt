@@ -1,0 +1,44 @@
+docker-compose
+---------------
+
+Spring rest and mysql
+---------------------------
+How to create docker image for java application ?
+
+pull the mysql image from docker hub
+
+both image run on the same network
+
+
+Microservice ---> n no of microservice 
+
+one microservice is depending on the other microservice
+
+naming-server (.jar)---> docker image --> container
+gateway-service (.jar)---> docker image --->container--->naming-server container
+coupon-service---> docker image ---> container-->naming-server container,mysql-container
+product-service---> docker image ---> container-->naming-server container,mysql-container
+mysql---> mysql-container
+network
+
+docker-compose.yml
+--------------
+version
+services:
+  listoutallthe services
+networks
+
+
+application.properties
+Dockerfile
+jar available inside the target
+
+docker-compose.yml --->
+
+
+
+
+
+
+
+
